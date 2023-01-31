@@ -1,0 +1,39 @@
+---
+- name: "Detect OS Debian / Ubuntu / CentOS / RHEL distro"
+  hosts: all
+
+  tasks:
+
+### Debian
+    - name: Obteniendo Info del OS Debian
+      shell: 'cat /etc/os-release | grep -i PRETTY_NAME'
+      args:
+        executable: /bin/bash
+      when:
+        - ansible_distribution == "Debian"
+
+### Ubuntu
+    - name: Obteniendo Info del OS Ubuntu
+      shell: 'cat /etc/os-release | grep -i PRETTY_NAME'
+      args:
+        executable: /bin/bash
+      when:
+        - ansible_distribution == "Ubuntu"
+
+### CentOS
+    - name: Obteniendo Info del OS CentOS
+      shell: 'cat /etc/redhat-release'
+      args:
+        executable: /bin/bash
+      when:
+        - ansible_distribution == "CentOS"
+
+### RedHat
+    - name: Obteniendo Info del OS RedHat
+    - import_playbook: ./kernel.yml
+    - import_playbook: ./fecha.yml
+    - import_playbook: ./uuid.yml
+    - import_playbook: ./rhelyum.yml
+      when:
+        - ansible_distribution == "RedHat"
+...

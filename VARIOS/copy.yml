@@ -1,0 +1,16 @@
+---
+- hosts: all
+  tasks:
+   
+    - name: conf rsyslog origen destino all
+      copy:
+        src: rsyslogrhel.conf
+        dest: /etc/rsyslog.conf
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+
+    - name: restart rsyslog
+      service: name=rsyslog  state=restarted
+...

@@ -1,0 +1,13 @@
+destination d_cons { file("/var/log/audit/audit.log"); };       
+destination d_mesg { file("/var/log/auth.log"); };              
+destination d_auth { file("/var/log/cron"); };                  
+destination d_mail { file("/var/log/dpkg.log"); };              
+destination d_spol { file("/var/log/messages"); };              
+destination d_boot { file("/var/log/secure"); };                
+destination d_cron { file("/var/log/sudo"); };                  
+destination d_kern { file("/var/log/syslog"); };                
+destination d_cons { file("/var/log/wtmp"); };                  
+destination d_mesg { file("/var/log/yum.log"); };               
+destination d_auth { file("/var/log/apache2/access.log"); };    
+destination d_mail { file("/var/log/httpd/access.log"); };      
+destination d_mlal { usertty("*"); };                           

@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="remediaciones-de-seguridad---------------------------------bancoppel">Remediaciones de Seguridad                                 Bancoppel</h1>
+<p>OBJETIVO:</p>
+<p>• Intentos de autenticación exitosos y fallidos, con prioridad en los    servicios de red los cuales pueden<br>
+•/var/log/faillog Log deprecado<br>
+• /var/log/auth.log Para servidores Debian y derivados<br>
+• /var/log/secure Para servidores Redhat y derivados<br>
+• Uso de cualquier invocación de cuenta “root” o privilegiada, como el comando “su” (ej. Registro de “sudoers”)<br>
+• /var/log/auth.log Para servidores Debian y derivados<br>
+• /var/log/secure Para servidores Redhat y derivados<br>
+• Conexiones entrantes denegadas (ej. aquellas bloqueadas por iptables)<br>
+• /var/log/kern.log Para servidores Debian y derivados<br>
+• /var/log/messages Para servidores Redhat y derivados<br>
+• Historial de comandos (ej. bitácoras del historial de bash shell), incluidos los registros de fechas<br>
+•Install  auditd, psacct, o acct.<br>
+•Instalar y configurar psacct, o acct dependiendo el sistema operativo RHEL CentOS Debian, Ubuntu y derivados<br>
+• Iniciar servicios<br>
+•Configurar auditd, editar el archivo /etc/audit/auditd.conf<br>
+• Gestión de Reglas audit.rules<br>
+• Configurar en rsyslog<br>
+•/var/log/audit/audit.log<br>
+•/var/log/auth.log<br>
+•/var/log/cron<br>
+•/var/log/dpkg.log<br>
+•/var/log/messages<br>
+•/var/log/secure<br>
+•/var/log/sudo<br>
+•/var/log/syslog<br>
+•/var/log/wtmp<br>
+•/var/log/yum.log<br>
+•/var/log/httpd/access_log<br>
+•/var/log/apache2/access.log</p>
+<h1 id="files">Files</h1>
+<p>Archivos utilizados para la remedicacion<br>
+/Debian.yaml<br>
+/RedHat.yaml<br>
+/main.yaml<br>
+/hosts<br>
+/README.md<br>
+/Debian<br>
+/Debian/50-default.conf<br>
+/Debian/listen.conf<br>
+/Debian/rsyslog.conf<br>
+/Debian/kernel.yml<br>
+/Debian/fecha.yml<br>
+/Debian/uuid.yml<br>
+/Debian/pkgother.yml<br>
+/Debian/pkgaudit.yml<br>
+/Debian/rules.yml<br>
+/Debian/audit.yml<br>
+/Debian/logrotatedebian.yml<br>
+/Debian/rsyslogdebian.conf<br>
+/Debian/copy.yml<br>
+/inventario.tux<br>
+/Ubuntu<br>
+/Ubuntu/50-default.conf<br>
+/Ubuntu/audit.yml<br>
+/Ubuntu/fecha.yml<br>
+/Ubuntu/kernel.yml<br>
+/Ubuntu/listen.conf<br>
+/Ubuntu/logrotateother.yml<br>
+/Ubuntu/pkgaudit.yml<br>
+/Ubuntu/pkgother.yml<br>
+/Ubuntu/rsyslog.conf<br>
+/Ubuntu/rsyslogother.conf<br>
+/Ubuntu/rsyslogrhel.conf<br>
+/Ubuntu/rules.yml<br>
+/Ubuntu/uuid.yml<br>
+/Ubuntu/copy.yml<br>
+/Ubuntu/rsyslogdebian.conf<br>
+/CentOS<br>
+/CentOS/50-default.conf<br>
+/CentOS/audit.yml<br>
+/CentOS/cfgedit.yml<br>
+/CentOS/copy.yml<br>
+/CentOS/fecha.yml<br>
+/CentOS/kernel.yml<br>
+/CentOS/listen.conf<br>
+/CentOS/logrotateother.yml<br>
+/CentOS/logrotaterhel.yml<br>
+/CentOS/logrotate.yml<br>
+/CentOS/rhelyum.yml<br>
+/CentOS/rsyslog.conf<br>
+/CentOS/rsyslogother.conf<br>
+/CentOS/rsyslogrhel.conf<br>
+/CentOS/rules.yml<br>
+/CentOS/uuid.yml<br>
+/RedHat<br>
+/RedHat/50-default.conf<br>
+/RedHat/listen.conf<br>
+/RedHat/logrotateother.yml<br>
+/RedHat/rsyslog.conf<br>
+/RedHat/rsyslogother.conf<br>
+/RedHat/rsyslogrhel.conf<br>
+/RedHat/logrotaterhel.yml<br>
+/RedHat/kernel.yml<br>
+/RedHat/uuid.yml<br>
+/RedHat/audit.yml<br>
+/RedHat/fecha.yml<br>
+/RedHat/rhelyum.yml<br>
+/RedHat/rules.yml<br>
+/RedHat/logrotate.yml<br>
+/RedHat/cfgedit.yml<br>
+/RedHat/copy.yml<br>
+/Ubuntu.yaml<br>
+/CentOS.yaml</p>
+<h2 id="folders">Folders</h2>
+<p>Ubuntu<br>
+CentOS<br>
+Debian<br>
+RedHat</p>
+<h2 id="otros-archivos">Otros Archivos</h2>
+<p>/Debian/50-default.conf<br>
+/Debian/listen.conf<br>
+/Debian/rsyslog.conf<br>
+/Debian/rsyslogdebian.conf<br>
+/Ubuntu/50-default.conf<br>
+/Ubuntu/listen.conf<br>
+/Ubuntu/rsyslog.conf<br>
+/Ubuntu/rsyslogother.conf<br>
+/Ubuntu/rsyslogrhel.conf<br>
+/CentOS/50-default.conf<br>
+/CentOS/listen.conf<br>
+/CentOS/rsyslog.conf<br>
+/CentOS/rsyslogother.conf<br>
+/CentOS/rsyslogrhel.conf<br>
+/RedHat/50-default.conf<br>
+/RedHat/listen.conf<br>
+/RedHat/rsyslog.conf<br>
+/RedHat/rsyslogother.conf<br>
+/RedHat/rsyslogrhel.conf</p>
+<h2 id="declarar-archivo-hosts">DECLARAR ARCHIVO HOSTS</h2>
+<p>Se debe declarar en el archivo hosts las ip y los nombres de los server<br>
+ejemplo:</p>
+<p>[root@ss os_detector]# cat /etc/hosts<br>
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4<br>
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</p>
+<p>10.92.192.10            ubuntu.lab<br>
+10.92.192.250           rhel.lab</p>
+<p>[root@ss os_detector]#</p>
+<h2 id="inventario-inventario.tux">INVENTARIO inventario.tux</h2>
+<p>Se debe declarar usuario que va a ejecutar las tareas<br>
+ejemplo<br>
+[all:vars]<br>
+ansible_become=yes<br>
+ansible_become_user=root<br>
+ansible_become_password=07cf04cv<br>
+ansible_become_method=su<br>
+ansible_python_interpreter=auto_silent</p>
+<p>Luego declarar por SO los servers<br>
+ejemplo<br>
+[DebianHosts]<br>
+ubuntu.lab</p>
+<p>[UbuntuHosts]<br>
+ubuntu.lab</p>
+<p>[CentOSHost]<br>
+rhel.lab</p>
+<p>[RedHatHost]<br>
+rhel.lab</p>
+<h2 id="ejecutar">EJECUTAR</h2>
+<p>Este Playbook diferenciara el so y ejecutara la tarea para cada una de las distribuciones.</p>
+<p>ansible-playbook -i inventario.tux main.yaml -v</p>
+<p>#VERSION 0.1</p>
+<h2 id="copyright">Copyright</h2>
+<p><strong>Aviso de Copyright</strong></p>
+<p>Copyright 2020  xxxxxx</p>
+<p>El poseedor del Copyright tiene los siguientes derechos:</p>
+<p>Derecho a hacer copias.<br>
+Derecho a distribuir copias.<br>
+Derecho a hacer trabajos derivados (traducciones, adaptaciones…)<br>
+Derecho a exposición pública.<br>
+Estos derechos existen desde que el trabajo es creado y pertenecen al autor, este los puede vender, alquilar, transferir o donarlos individualmente o en conjunto.</p>
+<p>La duración del Copyright es desde la creación de la obra hasta los 50 años posteriores de la muerte del autor.</p>
+<p>Cuando la obra pertenece a varios autores el Copyright prevalece hasta los 50 años posteriores de la muerte del último autor.</p>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+---
+- hosts: all
+  tasks:
+
+  -  lineinfile:
+       path: /etc/audit/auditd.conf
+       backup: yes
+       regexp: '^max_log_file ='
+       line: 'max_log_file = 500'
+  
+  -  lineinfile:
+       path: /etc/audit/auditd.conf
+       backup: yes
+       regexp: '^max_log_file_action ='
+       line: 'max_log_file_action = keep_logs'
+  
+  -  lineinfile:
+       path: /etc/audit/auditd.conf
+       backup: yes
+       regexp: '^space_left ='
+       line: 'max_log_file_action = keep_logs'
+
+  -  lineinfile:
+       path: /etc/audit/auditd.conf
+       backup: yes
+       regexp: '^admin_space_left ='
+       line: 'admin_space_left_action = single'
+
+  -  lineinfile:
+       path: /etc/audit/auditd.conf
+       backup: yes
+       regexp: '^disk_full_action ='
+       line: 'disk_full_action = hal'
+...

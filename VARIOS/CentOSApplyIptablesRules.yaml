@@ -1,0 +1,64 @@
+---
+ - hosts: centOS79.labotux
+   gather_facts: yes
+   become: true
+   become_method: su
+   become_user: root
+
+   tasks:
+
+### 1era parte (default policy del FW)
+
+    - name: Set the default policy for the Input chain to Accept
+      iptables:
+        chain: INPUT
+        policy: ACCEPT
+
+    - name: Set the default policy for the Foward chain to Accept
+      iptables:
+        chain: FORWARD
+        policy: ACCEPT
+
+    - name: Set the default policy for the Output chain to Accept
+      iptables:
+        chain: OUTPUT
+        policy: ACCEPT
+
+### 2da parte ( Flushing any rule before apply )
+
+    - name: "Iptables flushing filters"
+      iptables:
+        chain: "{{ item }}"
+        flush: yes
+      with_items:  [ 'INPUT', 'FORWARD', 'OUTPUT' ]
+
+### 3era parte (Aplicamos la regla de iptables con el listado como soure al puerto 22 tcp)
+
+    - name: Allow TCP port 22 from ansible control node
+      iptables:
+        chain: INPUT
+        ctstate: NEW,ESTABLISHED,RELATED
+        protocol: tcp
+        #Nota 1era ip la del ansible controlador, sino quedas desconectado (ejemplo 192.168.126.129)
+        source: 192.168.126.129,10.26.216.28,10.27.28.34,10.36.176.96,10.26.214.235,10.26.216.49,10.36.176.89,10.36.176.109,10.27.207.136,10.36.176.106,10.26.216.57,10.36.176.105,10.26.216.56,10.36.176.97,10.26.216.26,10.26.213.111,10.26.214.64,10.36.176.118,10.36.176.119,10.26.216.40,10.26.216.41,10.26.216.19,10.30.10.41,10.30.10.35,10.36.176.125,10.26.216.47,10.36.176.124,10.26.216.46,10.30.10.6,10.30.10.7,10.26.216.53,10.26.216.52,10.26.214.166,10.26.216.15,10.36.176.102,10.36.176.104,10.36.176.103,10.26.213.124,10.36.176.112,10.36.176.115,10.36.176.113,10.36.176.110,10.26.214.223,10.26.216.37,10.26.216.34,10.26.216.35,10.26.216.32,10.26.216.36,10.26.216.33,10.36.176.114,10.36.176.111,10.26.214.48,10.26.216.29,10.36.176.107,10.36.176.94,10.26.216.51,10.26.213.223 
+        destination_port: '22'
+        jump: ACCEPT
+        comment: Accept new SSH connections from source list
+
+      when:
+        - ansible_default_ipv4['address'] == '192.168.126.150'
+
+### 4ta parte (regla final que bloquea todo lo demas)
+
+    - name: Block all traffic to port TCP/22 
+      iptables:
+        chain: INPUT
+        ctstate: NEW,ESTABLISHED,RELATED
+        protocol: tcp
+        destination_port: '22'
+        jump: DROP
+        comment: Block any other SSH connections outside source list
+
+      when:
+        - ansible_default_ipv4['address'] == '192.168.126.150'
+...

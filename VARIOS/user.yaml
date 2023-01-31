@@ -1,0 +1,41 @@
+---
+- hosts: all
+  become: true
+  vars:
+        users:
+        - username: "seguridad"
+          uid: "1220"
+          nombre: "Ususario de Seguridad"
+          contrasena: "Er13121989"
+       
+  tasks:
+  - name: "Create seguridad group"
+    group:
+        name: "seguridad"
+        state: present
+  - name: "Create user accounts and users to group"
+    user:
+        name: "{{ item.username }}"
+        state: present
+        group: "seguridad"
+        uid: "{{ item.uid }}"
+        comment: "{{ item.nombre }}"
+        password: "{{ item.contrasena | password_hash('sha512') }}"
+        expires: "-1"
+        shell: "/bin/bash"
+    with_items: "{{ users }}"
+  - name: "Set password expiration days limit"
+    raw: "chage -M 365 {{ item.username }}"
+    with_items: "{{ users }}"
+  - name: "Touch seguridad file"
+    file:
+        path: "/etc/sudoers.d/seguridad"
+        state: touch
+        mode: "0644"
+        owner: "root"
+        group: "root"
+  - name: "Allow users of seguridad group to sudo without a password"
+    lineinfile:
+        dest: "/etc/sudoers.d/seguridad"
+        state: present
+        line: "%seguridad ALL=(ALL) NOPASSWD: ALL"

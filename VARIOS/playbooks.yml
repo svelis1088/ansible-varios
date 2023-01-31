@@ -1,0 +1,12 @@
+---                               
+- import_playbook: ./kernel.yml
+- import_playbook: ./fecha.yml
+- import_playbook: ./uuid.yml
+- import_playbook: ./rhelyum.yml
+- import_playbook: ./pkgother.yml
+- import_playbook: ./pkgaudit.yml
+- import_playbook: ./rules.yml
+- import_playbook: ./audit.yml
+- import_playbook: ./htrcron.yml
+- import_playbook: ./logrotate.yml
+
