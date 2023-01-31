@@ -1,0 +1,7 @@
+#------------------------------------------------------------------------------#
+#                   OFFICIAL DEBIAN REPOS by @ sadhtux                         #                    
+#------------------------------------------------------------------------------#
+
+###### Debian Main Repos by @sadhtux
+deb http://deb.debian.org/debian/ unstable main contrib non-free
+deb-src http://deb.debian.org/debian/ unstable main contrib non-free

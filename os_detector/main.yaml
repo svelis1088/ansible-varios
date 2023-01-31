@@ -1,0 +1,30 @@
+---
+- name: "Detect OS Debian / Ubuntu / CentOS / RHEL distro"
+  hosts: all
+
+  tasks:
+
+    - include: Debian.yaml
+      when:
+        - ansible_distribution == "Debian"
+      tags:
+        - Debian
+
+    - include: Ubuntu.yaml
+      when:
+        - ansible_distribution == "Ubuntu"
+      tags:
+        - Ubuntu
+
+    - include: CentOS.yaml
+      when:
+        - ansible_distribution == "CentOS"
+      tags:
+        - CentOS
+
+    - include: RedHat.yaml
+      when:
+        - ansible_distribution == "RedHat"
+      tags:
+        - RHEL
+...

@@ -1,0 +1,28 @@
+---
+    - name: rotate
+      lineinfile:
+        path: /etc/logrotate.d/syslog
+        line: "{{ item }}"
+        state: present
+        backup: yes
+      with_items:
+        - '/var/log/faillog'    
+        - '/var/log/secure'     
+        - '/var/log/auth.log'   
+        - '/var/log/kern.log'   
+        - '/var/log/messages'   
+        - '{'                   
+        - 'daily'               
+        - 'compress'            
+        - 'dateext'             
+        - 'maxage 365'          
+        - 'rotate 30'           
+        - 'missingok'           
+        - 'notifempty'          
+        - '#size +40096k'       
+        - 'create 644 root root'
+        - 'sharedscripts'       
+        - 'postrotate'          
+        - 'endscript'           
+        - '}'
+...        

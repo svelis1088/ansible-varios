@@ -1,0 +1,194 @@
+---
+ - hosts: 10.26.213.111
+   gather_facts: yes
+   become: true
+   become_method: su
+   become_user: root
+
+   tasks:
+
+### 1era parte (default policy del FW)
+
+    - name: Set the default policy for the Input chain to Accept
+      iptables:
+        chain: INPUT
+        policy: ACCEPT
+
+    - name: Set the default policy for the Foward chain to Accept
+      iptables:
+        chain: FORWARD
+        policy: ACCEPT
+
+    - name: Set the default policy for the Output chain to Accept
+      iptables:
+        chain: OUTPUT
+        policy: ACCEPT
+
+
+    - name: "Iptables flushing filters"
+      iptables:
+        chain: "{{ item }}"
+        flush: yes
+      with_items:  [ 'INPUT', 'FORWARD', 'OUTPUT' ]
+
+
+    - name: Allow TCP port 22 from ansible control node
+      iptables:
+        chain: INPUT
+        ctstate: NEW,ESTABLISHED,RELATED
+        protocol: tcp
+        #Nota 1era ip debe ser donde se ejecuta anisble engine
+        source: btsmty.banco.int ,tenablescanner.banco.int ,bitdefender.banco.int ,tenablescannermty.banco.int ,nod32.banco.int ,10.27.207.45 ,10.26.213.76 ,nessus.banco.int ,splunkmty.banco.int ,splunk.banco.int ,bitdefendermty.banco.int ,tenablescannermty.banco.int ,tenablescanner.banco.int ,pc.isl.bancoppel.io ,10.36.204.49 ,10.36.204.51 ,10.36.204.121 ,10.36.204.116 ,10.36.204.110 ,10.36.204.48 ,10.36.204.53 ,10.36.204.56 ,10.36.204.57 ,10.36.204.113 ,10.36.204.114 ,10.36.204.47 ,10.36.204.108 ,10.36.204.174 ,10.36.204.8 ,10.36.204.238
+        destination_port: '22'
+        jump: ACCEPT
+        comment: Accept new SSH connections from source list
+
+      when:
+        - ansible_default_ipv4['address'] == '10.26.213.111'
+
+    - name: Allow TCP port http-alt
+      iptables:
+        chain: INPUT
+        ctstate: NEW,ESTABLISHED,RELATED
+        protocol: tcp
+        source: 10.26.190.170 ,10.26.190.171 ,10.26.190.172 ,10.26.190.173 ,10.26.190.174 ,10.26.190.175 ,10.26.190.176 ,10.26.190.177 ,10.26.190.178 ,10.26.190.179 ,10.26.54.167 ,10.26.54.169 ,10.26.54.170 ,10.26.54.171
+        destination_port: 'http-alt'
+        jump: ACCEPT
+        comment: Accept port http-alt  connections from source list
+      when:
+        - ansible_default_ipv4['address'] == '10.26.213.111'
+
+
+    - name: Allow TCP port 8443
+      iptables:
+        chain: INPUT
+        ctstate: NEW,ESTABLISHED,RELATED
+        protocol: tcp
+        source: proxycul.banco.int ,proxydf.banco.int ,10.43.241.152 ,10.43.241.148 ,mail.btsincusa.com ,184.107.239.58 ,201.147.232.185 ,40.84.148.101 ,104.214.66.73 ,stats.dongxue.arvixevps.com ,10.43.241.151 ,10.44.37.73 ,10.44.1.152 ,10.44.3.142 ,10.44.1.162 ,10.44.3.162 ,10.44.16.8 ,184.107.241.202 ,bitdefender.banco.int ,10.50.0.109 ,10.50.0.17 ,10.50.0.18 ,10.50.0.66 ,10.50.0.67 ,10.50.0.105 ,10.50.0.106 ,10.50.0.107 ,10.50.0.108 ,10.26.218.58 ,10.44.1.160 ,10.44.16.171 ,10.44.16.172 ,10.44.16.217 ,10.26.54.167 ,10.26.54.169 ,10.26.54.170 ,10.26.54.171 ,pc.isl.bancoppel.io ,10.36.204.49 ,10.36.204.51 ,10.36.204.121 ,10.36.204.116 ,10.36.204.110 ,10.36.204.48 ,10.36.204.53 ,10.36.204.56 ,10.36.204.57 ,10.36.204.113 ,10.36.204.114 ,10.44.1.87 ,10.44.1.89 ,10.44.2.190 ,10.44.1.91 ,10.36.204.47 ,10.36.204.108 ,10.36.204.174 ,10.44.2.61 ,10.36.204.8 ,10.36.204.238
+        destination_port: '8443'
+        jump: ACCEPT
+        comment: Accept port 8443  connections from source list
+      when:
+        - ansible_default_ipv4['address'] == '10.26.213.111'
+  
+    - name: Allow TCP port loc-srv
+      iptables:
+        chain: INPUT
+        ctstate: NEW,ESTABLISHED,RELATED
+        protocol: tcp
+        source: tenablescanner.banco.int,tenablescannermty.banco.int
+        destination_port: 'loc-srv'
+        jump: ACCEPT
+        comment: Accept port loc-srv  connections from source list
+      when:
+        - ansible_default_ipv4['address'] == '10.26.213.111'
+    
+     - name: Allow TCP port loc-srv
+      iptables:
+        chain: INPUT
+        ctstate: NEW,ESTABLISHED,RELATED
+        protocol: tcp
+        source: tenablescanner.banco.int,tenablescannermty.banco.int  #Nota  debe estar dado de alta en dns   o  ip
+        destination_port: 'loc-srv'
+        jump: ACCEPT
+        comment: Accept port loc-srv  connections from source list
+      when:
+        - ansible_default_ipv4['address'] == '10.26.213.111'
+    
+    - name: Allow TCP port netbios-ssn                                                                                  
+      iptables:                                                                                                     
+        chain: INPUT                                                                                                
+        ctstate: NEW,ESTABLISHED,RELATED                                                                            
+        protocol: tcp                                                                                               
+        source: tenablescanner.banco.int,tenablescannermty.banco.int #Nota  debe estar dado de alta en dns   o  ip 
+        destination_port: 'netbios-ssn'                                                                                 
+        jump: ACCEPT                                                                                                
+        comment: Accept port netbios-ssn  connections from source list                                                
+      when:                                                                                                         
+        - ansible_default_ipv4['address'] == '10.26.213.111'                                                         
+    
+    
+    - name: Allow TCP port microsoft-ds
+      iptables:                                                                                                     
+        chain: INPUT                                                                                                
+        ctstate: NEW,ESTABLISHED,RELATED                                                                            
+        protocol: tcp                                                                                               
+        source: tenablescanner.banco.int ,tenablescannermty.banco.int ,10.26.172.40 ,10.26.172.24 ,10.26.172.30 ,10.26.172.26  #Nota  debe estar dado de alta en dns   o  ip 
+        destination_port: 'microsoft-ds'                                                                                 
+        jump: ACCEPT                                                                                                
+        comment: Accept port microsoft-ds  connections from source list                                                
+      when:                                                                                                         
+        - ansible_default_ipv4['address'] == '10.26.213.111'  
+        	
+    - name: Allow TCP port 5508
+      iptables:                                                                                                     
+        chain: INPUT                                                                                                
+        ctstate: NEW,ESTABLISHED,RELATED                                                                            
+        protocol: tcp                                                                                               
+        source: tenablescanner.banco.int ,tenablescannermty.banco.int
+        destination_port: '5508'                                                                                 
+        jump: ACCEPT                                                                                                
+        comment: Accept port 5508  connections from source list                                                
+      when:                                                                                                         
+        - ansible_default_ipv4['address'] == '10.26.213.111'  
+    
+    - name: Allow TCP port 6608
+      iptables:                                                                                                     
+        chain: INPUT                                                                                                
+        ctstate: NEW,ESTABLISHED,RELATED                                                                            
+        protocol: tcp                                                                                               
+        source: tenablescanner.banco.int ,tenablescannermty.banco.int
+        destination_port: '6608'                                                                                 
+        jump: ACCEPT                                                                                                
+        comment: Accept port 6608  connections from source list                                                
+      when:                                                                                                         
+        - ansible_default_ipv4['address'] == '10.26.213.111'  
+    
+    - name: Allow TCP port 8037
+      iptables:                                                                                                     
+        chain: INPUT                                                                                                
+        ctstate: NEW,ESTABLISHED,RELATED                                                                            
+        protocol: tcp                                                                                               
+        source: tenablescanner.banco.int ,tenablescannermty.banco.int
+        destination_port: '8037'                                                                                 
+        jump: ACCEPT                                                                                                
+        comment: Accept port 8037  connections from source list                                                
+      when:                                                                                                         
+        - ansible_default_ipv4['address'] == '10.26.213.111'  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+       
+    
+   
+    - name: Block all traffic to port TCP/22
+      iptables:
+        chain: INPUT
+        ctstate: NEW,ESTABLISHED,RELATED
+        protocol: tcp
+        destination_port: '22'
+        jump: DROP
+        comment: Block any other SSH connections outside source list
+
+      when:
+        - ansible_default_ipv4['address'] == '10.26.213.111'
+
+    - name: Save current state of the firewall in system file
+      community.general.iptables_state:
+         state: saved
+         path: /etc/sysconfig/iptablesbkp
+
+    - name: Add custom config FIREWALL TO REBOOT
+      lineinfile:
+        path: /etc/rc.local
+        line: iptables-restore </etc/sysconfig/iptablesbkp
+...
+
+...

@@ -1,0 +1,26 @@
+---
+ - hosts: all
+   gather_facts: yes
+   become: true
+
+   tasks:
+    
+   - name: Gather facts from new server    
+     setup:                                
+       filter: ansible_default_ipv4.address
+    
+    
+   - name: Save current state of the firewall in system file
+     community.general.iptables_state:
+        state: saved
+        path: /etc/sysconfig/iptablesbkp.{{ ansible_default_ipv4.address }}
+    
+
+   - name: Add custom config FIREWALL TO REBOOT
+     lineinfile:
+       path: /etc/rc.local
+       line: iptables-restore </etc/sysconfig/iptablesbkp.{{ ansible_default_ipv4.address }}
+    
+
+... 
+

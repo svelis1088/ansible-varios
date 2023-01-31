@@ -1,0 +1,12 @@
+---
+    - name: Create ProfileD Rule file for History Format
+      file:
+        path: /etc/profile.d/FechaHistorico.sh
+        state: touch
+        mode: u+rw
+
+    - name: Add custom config to file
+      lineinfile:
+        path: /etc/profile.d/FechaHistorico.sh
+        line: export HISTTIMEFORMAT="%F %T"
+...

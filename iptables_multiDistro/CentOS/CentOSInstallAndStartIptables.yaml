@@ -1,0 +1,19 @@
+---
+    - name: "Instalando ultima version de paquetes necesarios (iptables)"
+      yum:
+        name: "{{ packages }}"
+        state: latest
+        disable_gpg_check: yes
+        validate_certs: no
+        update_cache: yes 
+      vars:
+        packages:
+        - iptables-services
+        - iptables
+
+    - name: Enable service iptables, and ensure running state
+      service:
+        name: iptables
+        enabled: yes
+        state: started
+...

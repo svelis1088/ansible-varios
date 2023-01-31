@@ -1,0 +1,23 @@
+---
+ - hosts: all
+   gather_facts: yes
+   become: true
+
+   tasks:
+    
+   - name: "Gather facts for dinamic save backup file"
+     setup:                                
+       filter: ansible_default_ipv4.address
+    
+   - name: "Save current state of the firewall in local system folder /etc/sysconfig/"
+     community.general.iptables_state:
+        state: saved
+        path: /etc/sysconfig/iptablesbkp.{{ ansible_default_ipv4.address }}
+    
+   - name: "Adding custom firewall rules to permanent config into /etc/rc.local"
+     lineinfile:
+       path: /etc/rc.local
+       line: iptables-restore </etc/sysconfig/iptablesbkp.{{ ansible_default_ipv4.address }}
+       backup: yes
+       mode: 0777
+...

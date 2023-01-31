@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become: yes
+  become_method: su
+  become_user: root
+
+  tasks:
+
+    - name: "Installing specific version of NPM via repo in RHEL 8.x"
+      dnf:
+        name: npm-6.14.11
+        state: present
+        disable_gpg_check: yes
+        validate_certs: no
+
+      when:
+        - ansible_distribution == "RedHat"
+        - ansible_distribution_major_version == "8"
+      tags:
+        - installNPM
+...

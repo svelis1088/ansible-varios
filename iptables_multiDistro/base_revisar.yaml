@@ -1,0 +1,73 @@
+---
+ - hosts: all
+   gather_facts: yes
+   become: true
+   become_method: su
+   become_user: root
+
+   tasks:
+
+    - name: IPTABLES
+      copy:
+        src: ./server10.92.192.250
+        dest: /etc/sysconfig/iptablesbkp
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+
+      when:
+        - ansible_default_ipv4['address'] == '10.92.192.250'
+    
+    
+    - name: Save current state of the firewall in system file
+      community.general.iptables_state:
+         state: saved
+         path: /etc/sysconfig/iptablesbkp
+    
+      when:
+        - ansible_default_ipv4['address'] == '10.92.192.250'
+    
+
+
+    - name: Add custom config FIREWALL TO REBOOT
+      lineinfile:
+        path: /etc/rc.local
+        line: iptables-restore </etc/sysconfig/iptablesbkp
+    
+      when:
+        - ansible_default_ipv4['address'] == '10.92.192.250'
+    
+
+    - name: IPTABLES
+      copy:
+        src: ./server10.92.192.10
+        dest: /etc/iptablesbkp
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+
+      when:
+        - ansible_default_ipv4['address'] == '10.92.192.10'
+    
+    
+    - name: Save current state of the firewall in system file
+      community.general.iptables_state:
+         state: saved
+         path: /etc/iptablesbkp
+
+      when:
+        - ansible_default_ipv4['address'] == '10.92.192.10'
+    
+    
+    - name: Add custom config FIREWALL TO REBOOT
+      lineinfile:
+        path: /etc/rc.local
+        line: iptables-restore </etc/sysconfig/iptablesbkp
+    
+    
+      when:
+        - ansible_default_ipv4['address'] == '10.92.192.10'
+... 
+

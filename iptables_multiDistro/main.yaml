@@ -1,0 +1,24 @@
+---
+- name: "Firewalld Disable and iptable rules set Multi Distro (CentOS + RHEL + Debian)"
+  hosts: all
+
+  tasks:
+
+    - include: RHEL/main_RHEL.yaml
+      when:
+        - ansible_distribution == "RedHat"
+      tags:
+        - RHEL
+
+    - include: CentOS/main_CentOS.yaml
+      when:
+        - ansible_distribution == "CentOS"
+      tags:
+        - CentOS
+
+    - include: Debian/main_Debian.yaml
+      when:
+        - ansible_distribution == "Debian"
+      tags:
+        - Debian
+...

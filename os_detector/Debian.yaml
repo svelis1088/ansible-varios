@@ -1,0 +1,11 @@
+---
+- include: ./Debian/kernel.yml
+- include: ./Debian/fecha.yml
+- include: ./Debian/uuid.yml
+- include: ./Debian/pkgother.yml
+- include: ./Debian/pkgaudit.yml
+- include: ./Debian/rules.yml
+- include: ./Debian/audit.yml
+- include: ./Debian/logrotatedebian.yml
+- include: ./Debian/copy.yml
+...

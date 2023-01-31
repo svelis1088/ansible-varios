@@ -1,0 +1,9 @@
+---
+    - name: "Cambiando Valores del Kernel para la flag ->  kernel.randomize_va_space <- Value = 2"
+      sysctl:                                                                         
+       name: kernel.randomize_va_space                                                            
+       state: present                                                                 
+       value: '2'                                                                  
+       reload: yes                                                                    
+       sysctl_set: yes                                                                
+...

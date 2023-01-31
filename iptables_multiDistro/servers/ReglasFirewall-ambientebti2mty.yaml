@@ -1,0 +1,97 @@
+---
+ - hosts: 10.26.216.28
+   gather_facts: yes
+   become: true
+   become_method: su
+   become_user: root
+
+   tasks:
+
+### 1era parte (default policy del FW)
+
+    - name: Set the default policy for the Input chain to Accept
+      iptables:
+        chain: INPUT
+        policy: ACCEPT
+
+    - name: Set the default policy for the Foward chain to Accept
+      iptables:
+        chain: FORWARD
+        policy: ACCEPT
+
+    - name: Set the default policy for the Output chain to Accept
+      iptables:
+        chain: OUTPUT
+        policy: ACCEPT
+
+
+    - name: "Iptables flushing filters"
+      iptables:
+        chain: "{{ item }}"
+        flush: yes
+      with_items:  [ 'INPUT', 'FORWARD', 'OUTPUT' ]
+
+
+    - name: Allow TCP port 22 from ansible control node
+      iptables:
+        chain: INPUT
+        ctstate: NEW,ESTABLISHED,RELATED
+        protocol: tcp
+        #Nota 1era ip debe ser donde se ejecuta anisble engine
+        source: 10.36.204.0/24,10.43.241.152,10.43.241.151,10.27.17.37,10.27.17.89,10.26.208.11,10.43.241.148,10.27.17.59,10.26.218.58,10.26.218.65,10.26.208.77,10.26.208.29,10.26.208.104,10.26.208.126,10.26.208.107,10.43.241.171,10.27.17.33,10.44.51.138,10.26.218.49,10.27.17.39,10.26.218.104,10.26.218.59,10.26.213.76,10.26.208.31,10.26.208.36,pc.isl.bancoppel.io,10.36.204.49,10.36.204.51,10.36.204.121,10.36.204.116,10.36.204.110,10.36.204.152,10.36.204.131,10.36.204.132,10.36.204.144,10.36.204.48,10.36.204.53,10.36.204.56,10.36.204.57,10.36.204.113,10.36.204.114,10.36.204.55,10.36.204.109,10.36.204.211,10.36.204.134
+        destination_port: '22'
+        jump: ACCEPT
+        comment: Accept new SSH connections from source list
+
+      when:
+        - ansible_default_ipv4['address'] == '10.26.216.28'
+
+    - name: Allow TCP port 8089
+      iptables:
+        chain: INPUT
+        ctstate: NEW,ESTABLISHED,RELATED
+        protocol: tcp
+        source: splunk.banco.int  #Nota  debe estar dado de alta en dns   o  ip
+        destination_port: '8089'
+        jump: ACCEPT
+        comment: Accept port 8089  connections from source list
+      when:
+        - ansible_default_ipv4['address'] == '10.26.216.28'
+
+    - name: Allow TCP port BACULA
+      iptables:
+        chain: INPUT
+        ctstate: NEW,ESTABLISHED,RELATED
+        protocol: tcp
+        source: splunk.banco.int  #Nota  debe estar dado de alta en dns   o  ip
+        destination_port: 'bacula-fd'
+        jump: ACCEPT
+        comment: Accept port bacula-fd  connections from source list
+      when:
+        - ansible_default_ipv4['address'] == '10.26.216.28'
+
+
+    - name: Block all traffic to port TCP/22
+      iptables:
+        chain: INPUT
+        ctstate: NEW,ESTABLISHED,RELATED
+        protocol: tcp
+        destination_port: '22'
+        jump: DROP
+        comment: Block any other SSH connections outside source list
+
+      when:
+        - ansible_default_ipv4['address'] == '10.26.216.28'
+
+    - name: Save current state of the firewall in system file
+      community.general.iptables_state:
+         state: saved
+         path: /etc/sysconfig/iptablesbkp
+
+    - name: Add custom config FIREWALL TO REBOOT
+      lineinfile:
+        path: /etc/rc.local
+        line: iptables-restore </etc/sysconfig/iptablesbkp
+...
+
+...

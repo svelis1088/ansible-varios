@@ -1,0 +1,47 @@
+---
+ - hosts: all
+   gather_facts: yes
+   become: true
+
+   tasks:
+    
+   - name: "GatherFatcs for extract IPv4 address"
+     setup:                                
+       filter: ansible_default_ipv4.address
+    
+   - name: "Save current state of the firewall in local system folder /etc/sysconfig/"
+     community.general.iptables_state:
+       state: saved
+       path: /etc/sysconfig/iptablesbkp.{{ ansible_default_ipv4.address }}
+
+   - name: "Copy custom iptables rules and config to remote host"
+     copy:
+       src: ./files/iptables.save.tux
+       dest: /etc/sysconfig/iptables_restored.rules
+       owner: root
+       group: root
+       mode: '0644'
+       backup: yes
+
+   - name: "Adding custom firewall rules to permanent config into /etc/rc.local"
+     lineinfile:
+       path: /etc/rc.d/rc.local
+       line: iptables-restore < /etc/sysconfig/iptables_restored.rules
+       backup: yes
+       mode: 0777
+
+##########################################################################
+# Antes de descomentar las siguientes lineas se debe estar seguro que el #
+# el controlador ansible-server esta en la lista de permitidos en las    #
+# rules del iptables, de lo contrario perdera conectividad con el host   #
+##########################################################################
+#   - name: "Live Restoring an Set of rules exported"
+#     community.general.iptables_state:
+#       state: restored
+#       path: /etc/sysconfig/iptables_restored.rules
+#     register: restoreOutput
+
+#   - name: "Mostrando resultado del Restore de Rules"
+#     ignore_errors: yes
+#     debug: msg="{{ restoreOutput.stdout }}"
+...

@@ -1,0 +1,16 @@
+---
+  - name: Set the default policy for the Input chain to Accept
+    iptables:
+      chain: INPUT
+      policy: ACCEPT
+
+  - name: Set the default policy for the Foward chain to Accept
+    iptables:
+      chain: FORWARD
+      policy: ACCEPT
+
+  - name: Set the default policy for the Output chain to Accept
+    iptables:
+      chain: OUTPUT
+      policy: ACCEPT
+...

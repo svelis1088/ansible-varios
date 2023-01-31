@@ -1,0 +1,20 @@
+---
+    - name: Allow TCP port 22 from ansible control node
+      iptables:
+        chain: INPUT
+#        ctstate: NEW,ESTABLISHED,RELATED
+        protocol: tcp
+        source: "{{ item }}"
+        destination_port: '22'
+        jump: ACCEPT                         
+        comment: Accept new SSH connections
+        policy: DROP
+
+      loop:
+         - 192.168.100.10/32
+         - 192.168.100.20/32
+         - 192.168.100.30/32
+
+      when:
+        - ansible_default_ipv4['address'] == '192.168.126.150'
+...

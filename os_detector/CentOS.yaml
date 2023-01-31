@@ -1,0 +1,11 @@
+---                                     
+- include: ./CentOS/kernel.yml          
+- include: ./CentOS/fecha.yml           
+- include: ./CentOS/uuid.yml            
+- include: ./CentOS/rhelyum.yml         
+- include: ./CentOS/rules.yml           
+- include: ./CentOS/audit.yml           
+- include: ./CentOS/logrotaterhel.yml   
+- include: ./CentOS/copy.yml   
+...                                     
+

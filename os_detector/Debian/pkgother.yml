@@ -1,0 +1,35 @@
+---
+   - name: Install all the packages
+     apt:
+       name: "{{ pkg }}"
+     vars: 
+       pkg:
+       - acct
+       - rsyslog
+       - auditd
+
+     when:
+       - ansible_os_family == "Debian"
+ 
+   - name:    auditd  service
+     service:
+       name: auditd
+       state: started
+       enabled: true
+  
+   - name:    rsyslog  service
+     service:
+       name: rsyslog
+       state: started
+       enabled: true
+
+   - name:    acct service
+     service:
+       name: acct
+       state: started
+       enabled: true
+
+   
+     when:
+       - ansible_os_family == "Debian"
+...

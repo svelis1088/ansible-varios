@@ -1,0 +1,128 @@
+---
+### RHEL 5.x
+    - name: Instalando AUDIT PSACC RSYSLOG para RHEL 5.x
+      yum:
+        name: ['audit','psacct','rsyslog']
+        state: present
+        validate_certs: no
+        disable_gpg_check: yes
+      
+    - name:  start and enabled auditd service
+      service:
+        name: auditd
+        state: started
+        enabled: true
+
+    - name:  start and enabled psacct service
+      service:
+        name: psacct
+        state: started
+        enabled: true
+    
+    - name:  start and enabled rsyslog  service
+      service:
+        name: rsyslog
+        state: started
+        enabled: true
+      
+      become: yes
+      when:
+        - ansible_facts['os_family'] == "RedHat"
+        - ansible_facts['distribution_major_version'] == "5"
+
+### RHEL 6.x
+    - name: Instalando AUDIT PSACC RSYSLOG para RHEL 6.x
+      yum:
+        name: ['audit','psacct','rsyslog']
+        state: present
+        validate_certs: no
+        disable_gpg_check: yes
+
+    - name:  start and enabled auditd service
+      service:
+        name: auditd
+        state: started
+        enabled: true
+
+    - name:  start and enabled psacct service
+      service:
+        name: psacct
+        state: started
+        enabled: true
+    
+    - name:  start and enabled rsyslog  service
+      service:
+        name: rsyslog
+        state: started
+        enabled: true
+    
+    
+    
+      become: yes
+      when:
+        - ansible_facts['os_family'] == "RedHat"
+        - ansible_facts['distribution_major_version'] == "6"
+
+### RHEL 7.x
+    - name: Instalando AUDIT PSACC RSYSLOG para RHEL 7.x
+      yum:
+        name: ['audit','psacct','rsyslog']
+        state: present
+        validate_certs: no
+        disable_gpg_check: yes
+    
+    - name:  start and enabled auditd service
+      service:
+        name: auditd
+        state: started
+        enabled: true
+
+    - name:  start and enabled psacct  service
+      service:
+        name: psacct
+        state: started
+        enabled: true
+
+    - name:  start and enabled rsyslog  service
+      service:
+        name: rsyslog
+        state: started
+        enabled: true
+
+
+        
+      become: yes
+      when:
+        - ansible_facts['os_family'] == "RedHat"
+        - ansible_facts['distribution_major_version'] == "7"
+
+### RHEL 8.x
+    - name: Instalando AUDIT PSACC RSYSLOG para RHEL 8.x
+      yum:
+        name: ['audit','psacct','rsyslog']
+        state: present
+        validate_certs: no
+        disable_gpg_check: yes
+    - name:  start and enabled auditd service
+      service:
+        name: auditd
+        state: started
+        enabled: true
+
+    - name:  start and enabled psacct service
+      service:
+        name: psacct
+        state: started
+        enabled: true
+        
+    - name:  start and enabled rsyslog  service
+      service:
+        name: rsyslog
+        state: started
+        enabled: true
+      
+      become: yes
+      when:
+        - ansible_facts['os_family'] == "RedHat"
+        - ansible_facts['distribution_major_version'] == "8"
+...

@@ -1,0 +1,73 @@
+[highend@centos8 ~]$ ansible-playbook main.yaml -i inventario.tux
+
+PLAY [Detect OS Debian / Ubuntu / CentOS / RHEL distro] ******************************************************************************************
+
+TASK [Gathering Facts] ***************************************************************************************************************************
+ok: [centos79.labotux]
+ok: [debian1090.labotux]
+ok: [rhel78.labotux]
+ok: [ubuntu1804.labotux]
+
+TASK [Obteniendo Info del OS Debian] *************************************************************************************************************
+skipping: [rhel78.labotux]
+skipping: [centos79.labotux]
+skipping: [ubuntu1804.labotux]
+changed: [debian1090.labotux]
+
+TASK [Print Debian OS Description] ***************************************************************************************************************
+ok: [debian1090.labotux] => {
+    "msg": "Info esperada para Distro Debian PRETTY_NAME=\"Debian GNU/Linux 10 (buster)\""
+}
+skipping: [centos79.labotux]
+skipping: [ubuntu1804.labotux]
+skipping: [rhel78.labotux]
+
+TASK [Obteniendo Info del OS Ubuntu] *************************************************************************************************************
+skipping: [debian1090.labotux]
+skipping: [centos79.labotux]
+skipping: [rhel78.labotux]
+changed: [ubuntu1804.labotux]
+
+TASK [Print Ubuntu OS Description] ***************************************************************************************************************
+skipping: [debian1090.labotux]
+skipping: [centos79.labotux]
+ok: [ubuntu1804.labotux] => {
+    "msg": "Info esperada para Distro Ubuntu PRETTY_NAME=\"Ubuntu 18.04.6 LTS\""
+}
+skipping: [rhel78.labotux]
+
+TASK [Obteniendo Info del OS CentOS] *************************************************************************************************************
+skipping: [debian1090.labotux]
+skipping: [ubuntu1804.labotux]
+skipping: [rhel78.labotux]
+changed: [centos79.labotux]
+
+TASK [Print CentOS OS Description] ***************************************************************************************************************
+skipping: [debian1090.labotux]
+ok: [centos79.labotux] => {
+    "msg": "Info esperada para Distro CentOS: PRETTY_NAME=\"CentOS Linux 7 (Core)\""
+}
+skipping: [ubuntu1804.labotux]
+skipping: [rhel78.labotux]
+
+TASK [Obteniendo Info del OS RedHat] *************************************************************************************************************
+skipping: [debian1090.labotux]
+skipping: [centos79.labotux]
+skipping: [ubuntu1804.labotux]
+changed: [rhel78.labotux]
+
+TASK [Print RedHat OS Description] ***************************************************************************************************************
+skipping: [debian1090.labotux]
+skipping: [ubuntu1804.labotux]
+skipping: [centos79.labotux]
+ok: [rhel78.labotux] => {
+    "msg": "Info esperada para Distro RedHat PRETTY_NAME=\"Red Hat Enterprise Linux Server 7.8 (Maipo)\""
+}
+
+PLAY RECAP ***************************************************************************************************************************************
+centos79.labotux           : ok=3    changed=1    unreachable=0    failed=0    skipped=6    rescued=0    ignored=0
+debian1090.labotux         : ok=3    changed=1    unreachable=0    failed=0    skipped=6    rescued=0    ignored=0
+rhel78.labotux             : ok=3    changed=1    unreachable=0    failed=0    skipped=6    rescued=0    ignored=0
+ubuntu1804.labotux         : ok=3    changed=1    unreachable=0    failed=0    skipped=6    rescued=0    ignored=0
+
+[highend@centos8 ~]$

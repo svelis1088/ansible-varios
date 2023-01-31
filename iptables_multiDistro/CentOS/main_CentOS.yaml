@@ -1,0 +1,7 @@
+---
+- include: CentOSDisableFirewalld.yaml
+- include: CentOSInstallAndStartIptables.yaml
+- include: CentOSFlushRules.yaml
+- include: CentOSDefaultPolicy.yaml
+- include: CentOSApllyRemediationRulesByIP.yaml
+...

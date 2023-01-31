@@ -1,0 +1,21 @@
+---
+    - name: "Purgando Cache de APT"
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+        autoclean: yes
+        autoremove: yes
+
+    - name: "Instalando paquetes necesarios (Prechecks)" 
+      apt:
+        name: "{{ packages }}"
+        install_recommends: yes
+        state: latest
+      vars:
+        packages:
+        - curl
+        - wget
+        - apt-transport-https
+        - dirmngr
+        - openssh-server
+...

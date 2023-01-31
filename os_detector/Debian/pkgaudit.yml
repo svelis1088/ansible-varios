@@ -1,0 +1,12 @@
+---
+   - name: Install all the packages
+     apt:
+       name: ['auditd']
+       state: present
+   
+   - name: Start and Enabled auditd Service
+     service:
+       name: auditd
+       state: started
+       enabled: true
+...

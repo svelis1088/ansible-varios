@@ -1,0 +1,28 @@
+Port 22
+ListenAddress 0.0.0.0
+Protocol 2
+X11Forwarding no
+IgnoreRhosts yes
+PubkeyAuthentication yes
+PasswordAuthentication yes
+AllowTcpForwarding no
+AllowStreamLocalForwarding no
+GatewayPorts no
+PermitTunnel no
+AddressFamily inet
+SyslogFacility AUTH
+LoginGraceTime 120
+PermitRootLogin no
+StrictModes yes
+PermitEmptyPasswords no
+Banner /etc/issue
+LogLevel VERBOSE
+AcceptEnv LANG LC_*
+Ciphers aes128-ctr,aes192-ctr,aes256-ctr
+HostKeyAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,ssh-rsa,ssh-dss
+KexAlgorithms ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha256
+MACs hmac-sha2-256,hmac-sha2-512,hmac-sha1
+Subsystem sftp /usr/lib/openssh/sftp-server
+UsePAM yes
+AllowGroups servidores agentes
+AllowUsers *@10.36.204.49 *@10.36.204.50 *@10.36.204.51 *@10.36.204.110 *@10.36.204.116 *@10.36.204.121 @10.26.208.31 nessus@10.26.213.76 nessus@10.27.204.94 nessus@10.27.28.60 nessus@10.27.204.93 bitdefender@10.27.28.80 bitdefender@10.26.211.51 bitdefender@10.27.207.45

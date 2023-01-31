@@ -1,0 +1,15 @@
+[highend@centos8 installSpecificPackageVersionRHEL]$ ansible-playbook -i inventario.tux npm-6.14.11.yaml  -kKv
+Using /etc/ansible/ansible.cfg as config file
+SSH password:
+BECOME password[defaults to SSH password]:
+
+PLAY [all] ********************************************************************************************
+
+TASK [Gathering Facts] ********************************************************************************
+ok: [rhel85.laboit]
+
+TASK [Installing specific version of NPM via repo in RHEL 8.x] ****************************************
+changed: [rhel85.laboit] => {"changed": true, "msg": "", "rc": 0, "results": ["Installed: npm-1:6.14.11-1.10.24.0.1.module+el8.3.0+10166+b07ac28e.x86_64", "Installed: nodejs-1:10.24.0-1.module+el8.3.0+10166+b07ac28e.x86_64", "Installed: nodejs-full-i18n-1:10.24.0-1.module+el8.3.0+10166+b07ac28e.x86_64"]}
+
+PLAY RECAP ********************************************************************************************
+rhel85.laboit              : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0

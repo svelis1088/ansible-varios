@@ -1,0 +1,29 @@
+---
+    - name: permisos
+      file:
+        path: /var/log/audit/audit.log
+        state: touch
+        mode: '0600'
+
+    - name: rules
+      lineinfile:
+        path: /etc/audit/rules.d/audit.rules
+        line: "{{ item }}"
+        state: present
+        backup: yes
+      with_items:
+        - '-w /etc/passwd -p wa -k user_change'
+        - '-w /etc/passwd -p wa -k user_change'
+        - '-w /etc/group -p wa -k group_change'
+        - '-w /etc/sudoers -p wa -k sudoers_change'
+        - '-w /etc/sudoers.d -p wa -k sudoers_change'
+        - '-w /etc/shadow -p wa -k pass_change'
+        - '-w /usr/sbin/cron -p x -k cron_exec'
+        - '-w /usr/sbin/crond -p x -k cron_exec'
+        - '-w /etc/rc.d/init.d -p x -k init_exec'
+        - '-w /etc/bash.bashrc -p wa -k bashrc_change'
+        - '-w /etc/bashrc -p wa -k bashrc_change'
+        - '-w /home/<username>/.profile -p wa -k profile_change'
+        - '-w /etc/init -p wax -k init_change'
+        - '-w /etc/init.d -p wax -k init_change'
+...
