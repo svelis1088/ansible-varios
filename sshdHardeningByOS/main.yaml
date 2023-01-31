@@ -1,0 +1,18 @@
+---
+- name: "Linux OS Updater Multi Distro (RHEL + Debian Only)"
+  hosts: all
+
+  tasks:
+
+    - include: Debian/main_Debian.yaml
+      when:
+        - ansible_distribution == "Debian"
+      tags:
+        - Debian
+
+    - include: RHEL/main_RHEL.yaml
+      when:
+        - ansible_distribution == "RedHat"
+      tags:
+        - RHEL
+...

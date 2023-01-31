@@ -1,0 +1,38 @@
+[highend@centos8 sshHardening_multiDistro]$ ansible-playbook main.yaml -i inventario.tux
+
+PLAY [Linux OS Updater Multi Distro (RHEL + Debian Only)] ****************************************************************************************
+
+TASK [Gathering Facts] ***************************************************************************************************************************
+ok: [debian1090.labotux]
+
+TASK [Copy custom repo config to remote Debian 8 Jessie] *****************************************************************************************
+skipping: [debian1090.labotux]
+
+TASK [Copy custom repo config to remote Debian 9 Stretch] ****************************************************************************************
+skipping: [debian1090.labotux]
+
+TASK [Copy custom repo config to remote Debian 10 Buster] ****************************************************************************************
+ok: [debian1090.labotux]
+
+TASK [Copy custom repo config to remote Debian 11 Bullseye] **************************************************************************************
+skipping: [debian1090.labotux]
+
+TASK [Purgando Cache de APT] *********************************************************************************************************************
+ok: [debian1090.labotux]
+
+TASK [Instalando paquetes necesarios (Prechecks)] ************************************************************************************************
+ok: [debian1090.labotux]
+
+TASK [Copy custom repo config to remote Debian 8.x Jessie] ***************************************************************************************
+skipping: [debian1090.labotux]
+
+TASK [Copy custom repo config to remote Debian 10.x Buster] **************************************************************************************
+changed: [debian1090.labotux]
+
+TASK [Ensure Restart sshd Service Daemon] ********************************************************************************************************
+changed: [debian1090.labotux]
+
+PLAY RECAP ***************************************************************************************************************************************
+debian1090.labotux         : ok=6    changed=2    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0
+
+[highend@centos8]$

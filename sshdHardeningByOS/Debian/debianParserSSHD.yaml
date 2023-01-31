@@ -1,0 +1,29 @@
+---
+### Debian 8.x
+    - name: "Copy custom sshd config to remote Debian 8.x Jessie"
+      copy:
+        src: config_files/sshd_config_debian_8x
+        dest: /etc/ssh/sshd_config
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+
+      when:
+        - ansible_distribution == "Debian"
+        - ansible_distribution_major_version == "8"
+
+### Debian 10.x
+    - name: "Copy custom sshd config to remote Debian 10.x Buster"
+      copy:
+        src: config_files/sshd_config_debian_10x
+        dest: /etc/ssh/sshd_config
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+
+      when:
+        - ansible_distribution == "Debian"
+        - ansible_distribution_major_version == "10"
+...

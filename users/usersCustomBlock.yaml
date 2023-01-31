@@ -1,0 +1,51 @@
+---
+- name: "Customizado de usuarios (Seguridad + Paranoid Mode)"
+  hosts: all
+  become: true
+  become_method: su
+  become_user: root
+
+  tasks:
+
+    - name: Ajusto el usuario sebas segun requerimiento del cliente.
+      user:
+        name: "{{ item }}"
+        force: yes
+        shell: /bin/nologin
+        password_lock: yes
+        comment: User disabled by Ansible Playbook
+      loop:
+         - sduarte
+         - sebas
+         - tercero
+
+      tags: userModule
+
+
+    - name: Modo paranoico (Afecto el Shadow via shell)
+      command: chage -E 0 "{{ item.user }}"
+      with_items:
+      - {user: "sduarte"}
+      - {user: "sebas"}
+      - {user: "tercero"}
+
+      tags: chage
+
+    - name: Modo paranoico (Afecto el Shadow via shell)
+      command: usermod -s /sbin/nologin "{{ item.user }}"
+      with_items:
+      - {user: "sduarte"}
+      - {user: "sebas"}
+      - {user: "tercero"}
+
+      tags: usermodS
+
+    - name: Modo paranoico (Afecto el Shadow via shell)
+      command: usermod -L "{{ item.user }}"
+      with_items:
+      - {user: "sduarte"}
+      - {user: "sebas"}
+      - {user: "tercero"}
+
+      tags: usermodL
+...

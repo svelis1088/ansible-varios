@@ -1,0 +1,6 @@
+---
+  - name: "Ensure Restart sshd Service Daemon"
+    service: 
+      name: sshd 
+      state: restarted
+...

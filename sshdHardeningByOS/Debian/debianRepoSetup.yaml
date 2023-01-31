@@ -1,0 +1,61 @@
+---
+### Debian 8 Jessie
+    - name: "Copy custom repo config to remote Debian 8 Jessie"
+      copy:
+        src: config_files/source.list_jessie
+        dest: /etc/apt/sources.list
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+
+      when:
+        - ansible_distribution == "Debian"
+        - ansible_distribution_release == "jessie"
+        - ansible_distribution_version == "8"
+
+### Debian 9 Stretch
+    - name: "Copy custom repo config to remote Debian 9 Stretch"
+      copy:
+        src: config_files/source.list_stretch
+        dest: /etc/apt/sources.list
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+
+      when:
+        - ansible_distribution == "Debian"
+        - ansible_distribution_release == "stretch"
+        - ansible_distribution_version == "9"
+
+### Debian 10 Buster
+    - name: "Copy custom repo config to remote Debian 10 Buster"
+      copy:
+        src: config_files/source.list_buster
+        dest: /etc/apt/sources.list
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+
+      when:
+        - ansible_distribution == "Debian"
+        - ansible_distribution_release == "buster"
+        - ansible_distribution_version == "10"
+
+### Debian 11 Bulseye
+    - name: "Copy custom repo config to remote Debian 11 Bullseye"
+      copy:
+        src: config_files/source.list_bullseye
+        dest: /etc/apt/sources.list
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+
+      when:
+        - ansible_distribution == "Debian"
+        - ansible_distribution_release == "bullseye"
+        - ansible_distribution_version == "11"
+...

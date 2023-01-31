@@ -1,0 +1,101 @@
+---
+- name: "Customizado de usuarios (Seguridad + Paranoid Mode)"
+  hosts: all
+  become: true
+  become_method: su
+  become_user: root
+
+  tasks:
+
+    
+    - name: Modo paranoico (Afecto el Shadow via shell)
+      command: chage -E 0 "{{ item.user }}"
+      with_items:
+      - {user: "bin "}
+      - {user: "bitdefender "}
+      - {user: "clam "}
+      - {user: "clamav "}
+      - {user: "daemon "}
+      - {user: "games "}
+      - {user: "lleono "}
+      - {user: "nessus "}
+      - {user: "nesus "}
+      - {user: "operator "}
+      - {user: "pruebas "}
+      - {user: "splunk "}
+      - {user: "splunkadm "}
+      - {user: "storage "}
+      - {user: "sys "}
+      - {user: "systemd-network "}
+      - {user: "test "}
+      - {user: "www-data "}
+
+      tags: chage
+
+    - name: Modo paranoico (Afecto el Shadow via shell)
+      command: usermod -s /sbin/nologin "{{ item.user }}"
+      with_items:
+      - {user: "bin "}
+      - {user: "bitdefender "}
+      - {user: "clam "}
+      - {user: "clamav "}
+      - {user: "daemon "}
+      - {user: "games "}
+      - {user: "lleono "}
+      - {user: "nessus "}
+      - {user: "nesus "}
+      - {user: "operator "}
+      - {user: "pruebas "}
+      - {user: "splunk "}
+      - {user: "splunkadm "}
+      - {user: "storage "}
+      - {user: "sys "}
+      - {user: "systemd-network "}
+      - {user: "test "}
+      - {user: "www-data "}
+
+      tags: usermodS
+
+    - name: Modo paranoico (Afecto el Shadow via shell)
+      command: usermod -L "{{ item.user }}"
+      with_items:
+      - {user: "bin "}
+      - {user: "bitdefender "}
+      - {user: "clam "}
+      - {user: "clamav "}
+      - {user: "daemon "}
+      - {user: "games "}
+      - {user: "lleono "}
+      - {user: "nessus "}
+      - {user: "nesus "}
+      - {user: "operator "}
+      - {user: "pruebas "}
+      - {user: "splunk "}
+      - {user: "splunkadm "}
+      - {user: "storage "}
+      - {user: "sys "}
+      - {user: "systemd-network "}
+      - {user: "test "}
+      - {user: "www-data "}
+
+
+      tags: usermodL
+...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

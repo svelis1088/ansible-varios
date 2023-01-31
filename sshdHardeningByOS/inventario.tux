@@ -1,0 +1,10 @@
+[all:vars]
+ansible_become=yes
+ansible_become_user=root
+ansible_become_password=root00
+ansible_become_method=su
+ansible_python_interpreter=auto_silent
+
+[laboTUX]
+debian1090.labotux
+rhel78.labotux

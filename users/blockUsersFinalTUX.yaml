@@ -1,0 +1,54 @@
+---
+- hosts: all
+  gather_facts: false
+
+  vars:
+  - usernames:
+      - bin
+      - bitdefender
+      - clam
+      - clamav
+      - daemon
+      - games
+      - lleono
+      - nessus
+      - nesus
+      - operator
+      - pruebas
+      - splunk
+      - splunkadm
+      - storage
+      - sys
+      - systemd-network
+      - test
+      - www-data
+# Se agrega usuario imaginario a la lista solo por motivos de prueba
+# puesdes notar como skipea dicho usuario al no encontrarlo en el sistema.
+      - unknown
+
+  tasks:
+   - name: Search user list into /etc/paswwd
+     shell: egrep "^{{ item }}:" /etc/passwd
+     args:
+       warn: no
+     ignore_errors: yes
+
+     with_items:
+          - "{{ usernames }}"
+     register: user_info
+
+   - name: Forcing user accounts to expire (/etc/shadow Unix old style).
+     shell: chage -E 0 "{{ item.item }}"
+     with_items: "{{ user_info.results }}"
+     when: item.rc == 0
+
+   - name: Aplicando UserMod -L
+     shell: usermod -L "{{ item.item }}"
+     with_items: "{{ user_info.results }}"
+     when: item.rc == 0
+
+   - name: Aplicando UserMod -S
+     shell: usermod -s /sbin/nologin "{{ item.item }}"
+     with_items: "{{ user_info.results }}"
+     when: item.rc == 0
+...

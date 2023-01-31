@@ -1,0 +1,34 @@
+Port 22
+ListenAddress 0.0.0.0
+Protocol 2
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_dsa_key
+UsePrivilegeSeparation yes
+KeyRegenerationInterval 3600
+ServerKeyBits 768
+SyslogFacility AUTH
+LogLevel INFO
+LoginGraceTime 120
+PermitRootLogin no
+StrictModes yes
+RSAAuthentication yes
+PubkeyAuthentication yes
+IgnoreRhosts yes
+RhostsRSAAuthentication no
+HostbasedAuthentication no
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+X11Forwarding yes
+X11DisplayOffset 10
+PrintMotd no
+PrintLastLog yes
+TCPKeepAlive yes
+Banner /etc/issue
+AcceptEnv LANG LC_*
+Subsystem sftp /usr/lib/openssh/sftp-server
+UsePAM yes
+AllowGroups monitoreo splunkadm servidores coordinacion nessus
+AllowUsers c92085059 splunkadm c93496079 c94140332 c94576688 c93376391 c93866305 c92089461 nessus c95454161 c95737073
+
+Ciphers aes128-ctr,aes192-ctr,aes256-ctr
+MACs hmac-sha1,umac-64@openssh.com,hmac-ripemd160

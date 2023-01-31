@@ -1,0 +1,60 @@
+---
+- name: "Customizado de usuarios (Seguridad)"
+  hosts: all
+  become: true
+  become_method: su
+  become_user: root
+
+  tasks:
+
+    - name: Ajusto el usuario sebas segun requerimiento del cliente.
+      user:
+        name: "{{ item }}"
+        force: yes
+        shell: /bin/nologin
+        password_lock: yes
+        comment: User disabled by Ansible Playbook
+      loop:
+         - bin
+         - bitdefender
+         - clam
+         - clamav
+         - daemon
+         - games
+         - lleono
+         - nessus
+         - nesus
+         - operator
+         - pruebas
+         - splunk
+         - splunkadm
+         - storage
+         - sys
+         - systemd-network
+         - test
+         - www-data
+
+    - name: Modo paranoico (Afecto el Shadow via shell)
+      shell:
+        name: /usr/bin/chage -E 0 "{{ item }}"
+
+      loop:
+         - bin
+         - bitdefender
+         - clam
+         - clamav
+         - daemon
+         - games
+         - lleono
+         - nessus
+         - nesus
+         - operator
+         - pruebas
+         - splunk
+         - splunkadm
+         - storage
+         - sys
+         - systemd-network
+         - test
+         - www-data
+...
